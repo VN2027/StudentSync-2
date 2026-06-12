@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>StudentSync — Stop wondering what to study</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          ink: '#0B0E14',
+          panel: '#11151F',
+          line: '#1F2533',
+          accent: '#7AF6C7',
+          accent2: '#8B7BFF',
+          muted: '#7C879C'
+        },
+        fontFamily: {
+          display: ['"Space Grotesk"', 'sans-serif'],
+          body: ['"Inter"', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'monospace']
+        }
+      }
+    }
+  }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Inter', sans-serif; }
+  .font-display { font-family: 'Space Grotesk', sans-serif; }
+  .font-mono { font-family: 'JetBrains Mono', monospace; }
+  .page { display: none; }
+  .page.active { display: block; }
+  .glow-ring { box-shadow: 0 0 0 1px rgba(122,246,199,0.15), 0 0 40px -10px rgba(122,246,199,0.35); }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-thumb { background: #1F2533; border-radius: 8px; }
+  .progress-ring__circle { transition: stroke-dashoffset 0.6s ease; transform: rotate(-90deg); transform-origin: 50% 50%; }
+</style>
+</head>
+<body class="bg-ink text-slate-200 antialiased">
+
+<!-- NAV -->
+<nav class="sticky top-0 z-50 border-b border-line bg-ink/80 backdrop-blur">
+  <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <button onclick="goTo('landing')" class="flex items-center gap-2">
+      <span class="w-7 h-7 rounded-md bg-accent/15 border border-accent/30 flex items-center justify-center">
+        <i class="ti ti-bolt text-accent text-sm"></i>
+      </span>
+      <span class="font-display font-bold text-lg text-white tracking-tight">StudentSync</span>
+    </button>
+    <div id="navLinks" class="hidden md:flex items-center gap-7 text-sm text-muted">
+      <a href="#" onclick="goTo('landing')" class="hover:text-white transition">Home</a>
+      <a href="#" onclick="goTo('dashboard')" class="hover:text-white transition">Dashboard</a>
+      <a href="#" onclick="goTo('upload')" class="hover:text-white transition">Upload</a>
+      <a href="#" onclick="goTo('planner')" class="hover:text-white transition">Planner</a>
+      <a href="#" onclick="goTo('focus')" class="hover:text-white transition">Focus</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <button onclick="goTo('login')" class="hidden sm:block text-sm text-muted hover:text-white transition">Log in</button>
+      <button onclick="goTo('register')" class="text-sm font-medium bg-accent text-ink px-4 py-2 rounded-lg hover:bg-accent/90 transition">Get started</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ LANDING ============ -->
+<div id="page-landing" class="page active">
+  <!-- HERO -->
+  <section class="max-w-6xl mx-auto px-6 pt-20 pb-24 grid md:grid-cols-2 gap-12 items-center">
+    <div>
+      <p class="font-mono text-xs text-accent tracking-widest uppercase mb-4">Built for Year 11 &amp; 12</p>
+      <h1 class="font-display text-5xl md:text-6xl font-bold text-white leading-[1.05] tracking-tight">
+        Stop wondering<br/>what to study.
+      </h1>
+      <p class="mt-6 text-lg text-muted max-w-md">Upload assessment notifications and StudentSync turns them into a personalised, week-by-week action plan — so you always know the next right move.</p>
+      <div class="mt-8 flex items-center gap-4">
+        <button onclick="goTo('register')" class="bg-accent text-ink font-medium px-6 py-3 rounded-lg hover:bg-accent/90 transition">Get started</button>
+        <button onclick="goTo('dashboard')" class="border border-line text-slate-200 px-6 py-3 rounded-lg hover:border-accent/40 transition flex items-center gap-2">
+          <i class="ti ti-player-play text-sm"></i> View demo
+        </button>
+      </div>
+    </div>
+    <div class="relative">
+      <div class="absolute -inset-4 bg-accent2/10 rounded-3xl blur-3xl"></div>
+      <div class="relative bg-panel border border-line rounded-2xl p-6 glow-ring">
+        <div class="flex items-center justify-between mb-5">
+          <p class="font-display font-bold text-white">Economics — Federal Budget Essay</p>
+          <span class="font-mono text-xs text-accent bg-accent/10 px-2 py-1 rounded">3 days left</span>
+        </div>
+        <div class="space-y-3">
+          <div class="flex items-center gap-3 text-sm">
+            <i class="ti ti-circle-check text-accent"></i><span class="text-muted line-through">Read task &amp; rubric</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm">
+            <i class="ti ti-circle-check text-accent"></i><span class="text-muted line-through">Build TEEL essay outline</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm">
+            <i class="ti ti-circle-dashed text-slate-500"></i><span class="text-slate-200">Draft body paragraphs</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm">
+            <i class="ti ti-circle-dashed text-slate-500"></i><span class="text-slate-200">Final review &amp; submit</span>
+          </div>
+        </div>
+        <div class="mt-6 pt-5 border-t border-line flex items-center justify-between">
+          <span class="text-xs text-muted">Generated by StudentSync AI</span>
+          <span class="font-mono text-xs text-accent2">62% complete</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t border-line">
+    <p class="font-mono text-xs text-accent2 tracking-widest uppercase mb-3">How it works</p>
+    <h2 class="font-display text-3xl font-bold text-white mb-12">Four tools, one rhythm.</h2>
+    <div class="grid md:grid-cols-4 gap-6">
+      <div class="bg-panel border border-line rounded-xl p-5">
+        <i class="ti ti-upload text-accent text-2xl mb-4"></i>
+        <h3 class="font-display font-bold text-white mb-2">Smart assessment upload</h3>
+        <p class="text-sm text-muted">Drop in a photo, PDF, or screenshot of any task sheet and StudentSync reads the subject, due date, weighting and requirements.</p>
+      </div>
+      <div class="bg-panel border border-line rounded-xl p-5">
+        <i class="ti ti-route text-accent text-2xl mb-4"></i>
+        <h3 class="font-display font-bold text-white mb-2">AI study planning</h3>
+        <p class="text-sm text-muted">Every assessment is broken into a realistic week-by-week plan, fitted around everything else already on your plate.</p>
+      </div>
+      <div class="bg-panel border border-line rounded-xl p-5">
+        <i class="ti ti-layout-dashboard text-accent text-2xl mb-4"></i>
+        <h3 class="font-display font-bold text-white mb-2">Productivity dashboard</h3>
+        <p class="text-sm text-muted">One screen for today's tasks, study sessions, and what's coming up — no more checking five different apps.</p>
+      </div>
+      <div class="bg-panel border border-line rounded-xl p-5">
+        <i class="ti ti-chart-line text-accent text-2xl mb-4"></i>
+        <h3 class="font-display font-bold text-white mb-2">Progress tracking</h3>
+        <p class="text-sm text-muted">Completion rates, weekly study hours, and streaks — so momentum is visible, not just felt.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI BOUNDARY CALLOUT -->
+  <section class="max-w-6xl mx-auto px-6 py-4">
+    <div class="bg-panel border border-accent2/30 rounded-xl p-5 flex items-start gap-4">
+      <i class="ti ti-shield-check text-accent2 text-2xl mt-1"></i>
+      <div>
+        <h3 class="font-display font-bold text-white mb-1">Planning, not answers</h3>
+        <p class="text-sm text-muted">StudentSync's AI organises your time and breaks down tasks — it never writes assignment content for you. It's built to help you do the work, not skip it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t border-line">
+    <p class="font-mono text-xs text-accent2 tracking-widest uppercase mb-3">From students testing StudentSync</p>
+    <h2 class="font-display text-3xl font-bold text-white mb-12">Real terms, fewer scrambles.</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-panel border border-line rounded-xl p-5">
+        <p class="text-sm text-slate-200 mb-4">"I used to find out about assessments a week before. Now I upload the notification the day it's handed out and it's already broken down for me."</p>
+        <p class="text-xs text-muted font-mono">— Year 12, Biology &amp; Economics</p>
+      </div>
+      <div class="bg-panel border border-line rounded-xl p-5">
+        <p class="text-sm text-slate-200 mb-4">"The focus timer plus the daily task list is the only reason I stopped doing everything the night before."</p>
+        <p class="text-xs text-muted font-mono">— Year 11, Maths &amp; Physics</p>
+      </div>
+      <div class="bg-panel border border-line rounded-xl p-5">
+        <p class="text-sm text-slate-200 mb-4">"Seeing my study streak go up is weirdly motivating. Small thing, big difference."</p>
+        <p class="text-xs text-muted font-mono">— Year 11, Business Studies</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t border-line">
+    <p class="font-mono text-xs text-accent2 tracking-widest uppercase mb-3">Pricing</p>
+    <h2 class="font-display text-3xl font-bold text-white mb-12">Free to start. Always.</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-panel border border-line rounded-xl p-6">
+        <h3 class="font-display font-bold text-white mb-1">Free</h3>
+        <p class="font-display text-3xl font-bold text-white mb-4">$0</p>
+        <ul class="text-sm text-muted space-y-2 mb-6">
+          <li class="flex gap-2"><i class="ti ti-check text-accent mt-0.5"></i>Unlimited assessments</li>
+          <li class="flex gap-2"><i class="ti ti-check text-accent mt-0.5"></i>AI study plans</li>
+          <li class="flex gap-2"><i class="ti ti-check text-accent mt-0.5"></i>Focus timer &amp; streaks</li>
+        </ul>
+        <button onclick="goTo('register')" class="w-full border border-line rounded-lg py-2 text-sm hover:border-accent/40 transition">Get started</button>
+      </div>
+      <div class="bg-panel border-2 border-accent rounded-xl p-6 relative">
+        <span class="absolute -top-3 left-6 bg-accent text-ink text-xs font-medium px-3 py-1 rounded-full">Most popular</span>
+        <h3 class="font-display font-bold text-white mb-1">Plus</h3>
+        <p class="font-display text-3xl font-bold text-white mb-4">$4<span class="text-sm text-muted font-body">/mo</span></p>
+        <ul class="text-sm text-muted space-y-2 mb-6">
+          <li class="flex gap-2"><i class="ti ti-check text-accent mt-0.5"></i>Everything in Free</li>
+          <li class="flex gap-2"><i class="ti ti-check text-accent mt-0.5"></i>Calendar sync</li>
+          <li class="flex gap-2"><i class="ti ti-check text-accent mt-0.5"></i>Weekly progress reports</li>
+        </ul>
+        <button onclick="goTo('register')" class="w-full bg-accent text-ink rounded-lg py-2 text-sm font-medium hover:bg-accent/90 transition">Get started</button>
+      </div>
+      <div class="bg-panel border border-line rounded-xl p-6">
+        <h3 class="font-display font-bold text-white mb-1">School</h3>
+        <p class="font-display text-3xl font-bold text-white mb-4">Contact us</p>
+        <ul class="text-sm text-muted space-y-2 mb-6">
+          <li class="flex gap-2"><i class="ti ti-check text-accent mt-0.5"></i>Whole-cohort accounts</li>
+          <li class="flex gap-2"><i class="ti ti-check text-accent mt-0.5"></i>Wellbeing &amp; engagement insights</li>
+          <li class="flex gap-2"><i class="ti ti-check text-accent mt-0.5"></i>Assessment calendar import</li>
+        </ul>
+        <button class="w-full border border-line rounded-lg py-2 text-sm hover:border-accent/40 transition">Enquire</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-line">
+    <div class="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row justify-between gap-6 text-sm text-muted">
+      <div>
+        <div class="flex items-center gap-2 mb-2">
+          <span class="w-6 h-6 rounded-md bg-accent/15 border border-accent/30 flex items-center justify-center"><i class="ti ti-bolt text-accent text-xs"></i></span>
+          <span class="font-display font-bold text-white">StudentSync</span>
+        </div>
+        <p>Built by a student, for students.</p>
+      </div>
+      <div class="flex gap-10">
+        <div>
+          <p class="text-white font-medium mb-2">Product</p>
+          <p class="hover:text-white transition cursor-pointer" onclick="goTo('dashboard')">Dashboard</p>
+          <p class="hover:text-white transition cursor-pointer" onclick="goTo('upload')">Upload</p>
+          <p class="hover:text-white transition cursor-pointer" onclick="goTo('focus')">Focus mode</p>
+        </div>
+        <div>
+          <p class="text-white font-medium mb-2">Company</p>
+          <p>About</p>
+          <p>Contact</p>
+          <p>Privacy</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ============ LOGIN ============ -->
+<div id="page-login" class="page">
+  <div class="max-w-md mx-auto px-6 py-24">
+    <h1 class="font-display text-3xl font-bold text-white mb-2">Welcome back</h1>
+    <p class="text-muted text-sm mb-8">Log in to your StudentSync dashboard.</p>
+    <div class="space-y-4">
+      <div>
+        <label class="text-sm text-muted block mb-1">Email</label>
+        <input type="email" placeholder="you@school.edu.au" class="w-full bg-panel border border-line rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-accent/50" />
+      </div>
+      <div>
+        <label class="text-sm text-muted block mb-1">Password</label>
+        <input type="password" placeholder="••••••••" class="w-full bg-panel border border-line rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-accent/50" />
+      </div>
+      <button onclick="goTo('dashboard')" class="w-full bg-accent text-ink font-medium py-2.5 rounded-lg hover:bg-accent/90 transition">Log in</button>
+      <p class="text-sm text-muted text-center"><a href="#" onclick="goTo('forgot')" class="hover:text-white">Forgot password?</a></p>
+      <p class="text-sm text-muted text-center">No account? <a href="#" onclick="goTo('register')" class="text-accent hover:underline">Register</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ REGISTER ============ -->
+<div id="page-register" class="page">
+  <div class="max-w-md mx-auto px-6 py-24">
+    <h1 class="font-display text-3xl font-bold text-white mb-2">Create your account</h1>
+    <p class="text-muted text-sm mb-8">Takes about a minute. Free forever plan included.</p>
+    <div class="space-y-4">
+      <div>
+        <label class="text-sm text-muted block mb-1">Full name</label>
+        <input type="text" placeholder="Jane Smith" class="w-full bg-panel border border-line rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-accent/50" />
+      </div>
+      <div>
+        <label class="text-sm text-muted block mb-1">Email</label>
+        <input type="email" placeholder="you@school.edu.au" class="w-full bg-panel border border-line rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-accent/50" />
+      </div>
+      <div>
+        <label class="text-sm text-muted block mb-1">Password</label>
+        <input type="password" placeholder="••••••••" class="w-full bg-panel border border-line rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-accent/50" />
+      </div>
+      <div>
+        <label class="text-sm text-muted block mb-1">Year level</label>
+        <select class="w-full bg-panel border border-line rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-accent/50">
+          <option>Year 10</option>
+          <option selected>Year 11</option>
+          <option>Year 12</option>
+        </select>
+      </div>
+      <button onclick="goTo('dashboard')" class="w-full bg-accent text-ink font-medium py-2.5 rounded-lg hover:bg-accent/90 transition">Create account</button>
+      <p class="text-sm text-muted text-center">Already have an account? <a href="#" onclick="goTo('login')" class="text-accent hover:underline">Log in</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FORGOT PASSWORD ============ -->
+<div id="page-forgot" class="page">
+  <div class="max-w-md mx-auto px-6 py-24">
+    <h1 class="font-display text-3xl font-bold text-white mb-2">Reset your password</h1>
+    <p class="text-muted text-sm mb-8">Enter your email and we'll send a reset link.</p>
+    <div class="space-y-4">
+      <div>
+        <label class="text-sm text-muted block mb-1">Email</label>
+        <input type="email" placeholder="you@school.edu.au" class="w-full bg-panel border border-line rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-accent/50" />
+      </div>
+      <button onclick="goTo('login')" class="w-full bg-accent text-ink font-medium py-2.5 rounded-lg hover:bg-accent/90 transition">Send reset link</button>
+      <p class="text-sm text-muted text-center"><a href="#" onclick="goTo('login')" class="hover:text-white">Back to log in</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DASHBOARD ============ -->
+<div id="page-dashboard" class="page">
+  <div class="max-w-6xl mx-auto px-6 py-10">
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="font-display text-2xl font-bold text-white">Good afternoon, Vissy</h1>
+        <p class="text-muted text-sm">Friday, 12 June — here's what's on today.</p>
+      </div>
+      <button onclick="goTo('upload')" class="bg-accent text-ink text-sm font-medium px-4 py-2 rounded-lg hover:bg-accent/90 transition flex items-center gap-2">
+        <i class="ti ti-plus text-sm"></i> Upload assessment
+      </button>
+    </div>
+
+    <!-- Progress row -->
+    <div class="grid md:grid-cols-3 gap-4 mb-8">
+      <div class="bg-panel border border-line rounded-xl p-5">
+        <p class="text-sm text-muted mb-1">Completion this week</p>
+        <p class="font-display text-3xl font-bold text-white">76%</p>
+        <div class="mt-3 h-1.5 bg-line rounded-full overflow-hidden"><div class="h-full bg-accent" style="width:76%"></div></div>
+      </div>
+      <div class="bg-panel border border-line rounded-xl p-5">
+        <p class="text-sm text-muted mb-1">Weekly study hours</p>
+        <p class="font-display text-3xl font-bold text-white">9.5<span class="text-base text-muted font-body"> hrs</span></p>
+        <p class="text-xs text-accent mt-3 flex items-center gap-1"><i class="ti ti-trending-up"></i> +2.1 hrs vs last week</p>
+      </div>
+      <div class="bg-panel border border-line rounded-xl p-5">
+        <p class="text-sm text-muted mb-1">Study streak</p>
+        <p class="font-display text-3xl font-bold text-white flex items-center gap-2">12 <i class="ti ti-flame text-accent2"></i></p>
+        <p class="text-xs text-muted mt-3">Personal best: 19 days</p>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <!-- Today -->
+      <div class="md:col-span-2 bg-panel border border-line rounded-xl p-5">
+        <h2 class="font-display font-bold text-white mb-4">Today</h2>
+        <div class="space-y-3">
+          <div class="flex items-center gap-3 p-3 rounded-lg border border-line">
+            <input type="checkbox" checked class="w-4 h-4 accent-accent" />
+            <div class="flex-1">
+              <p class="text-sm text-slate-200 line-through">Active recall — Physics Module 3 wave mechanics</p>
+              <p class="text-xs text-muted">25 min study session · Done 8:40am</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 p-3 rounded-lg border border-line">
+            <input type="checkbox" class="w-4 h-4 accent-accent" />
+            <div class="flex-1">
+              <p class="text-sm text-slate-200">Draft TEEL body paragraph 2 — Economics budget essay</p>
+              <p class="text-xs text-muted">Due in plan: today · ~40 min</p>
+            </div>
+            <span class="font-mono text-xs text-accent bg-accent/10 px-2 py-1 rounded">Economics</span>
+          </div>
+          <div class="flex items-center gap-3 p-3 rounded-lg border border-line">
+            <input type="checkbox" class="w-4 h-4 accent-accent" />
+            <div class="flex-1">
+              <p class="text-sm text-slate-200">Read source 1 of 3 — Fast fashion multimodal</p>
+              <p class="text-xs text-muted">~20 min</p>
+            </div>
+            <span class="font-mono text-xs text-accent2 bg-accent2/10 px-2 py-1 rounded">English</span>
+          </div>
+          <div class="flex items-center gap-3 p-3 rounded-lg border border-line">
+            <input type="checkbox" class="w-4 h-4 accent-accent" />
+            <div class="flex-1">
+              <p class="text-sm text-slate-200">AAFC Thursday parade prep — uniform &amp; admin check</p>
+              <p class="text-xs text-muted">~15 min</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upcoming assessments -->
+      <div class="bg-panel border border-line rounded-xl p-5">
+        <h2 class="font-display font-bold text-white mb-4">Upcoming assessments</h2>
+        <div class="space-y-3">
+          <div class="border border-line rounded-lg p-3">
+            <div class="flex justify-between items-start mb-1">
+              <span class="font-mono text-xs text-accent bg-accent/10 px-2 py-0.5 rounded">Economics</span>
+              <span class="font-display text-sm font-bold text-white">3d</span>
+            </div>
+            <p class="text-sm text-slate-200">Federal Budget essay exam</p>
+            <p class="text-xs text-muted">Due 15 June</p>
+          </div>
+          <div class="border border-line rounded-lg p-3">
+            <div class="flex justify-between items-start mb-1">
+              <span class="font-mono text-xs text-accent2 bg-accent2/10 px-2 py-0.5 rounded">English</span>
+              <span class="font-display text-sm font-bold text-white">13d</span>
+            </div>
+            <p class="text-sm text-slate-200">Fast fashion multimodal</p>
+            <p class="text-xs text-muted">Due 25 June</p>
+          </div>
+          <div class="border border-line rounded-lg p-3">
+            <div class="flex justify-between items-start mb-1">
+              <span class="font-mono text-xs text-amber-300 bg-amber-300/10 px-2 py-0.5 rounded">Maths</span>
+              <span class="font-display text-sm font-bold text-white">8d</span>
+            </div>
+            <p class="text-sm text-slate-200">Task 2 — Linear Relationships</p>
+            <p class="text-xs text-muted">Due 20 June</p>
+          </div>
+        </div>
+        <button onclick="goTo('planner')" class="w-full mt-4 text-sm text-accent hover:underline">View full planner →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ UPLOAD ============ -->
+<div id="page-upload" class="page">
+  <div class="max-w-3xl mx-auto px-6 py-10">
+    <h1 class="font-display text-2xl font-bold text-white mb-1">Upload assessment</h1>
+    <p class="text-muted text-sm mb-8">Drop in a task sheet, photo, or screenshot. StudentSync will read the details for you to check.</p>
+
+    <div id="dropzone" onclick="simulateUpload()" class="border-2 border-dashed border-line rounded-xl p-12 text-center cursor-pointer hover:border-accent/40 transition">
+      <i class="ti ti-cloud-upload text-4xl text-muted mb-3"></i>
+      <p class="text-slate-200 font-medium">Click to upload, or drag a file here</p>
+      <p class="text-xs text-muted mt-1">PDF, PNG, JPG up to 10MB</p>
+    </div>
+
+    <div id="processing" class="hidden mt-6 bg-panel border border-line rounded-xl p-5 flex items-center gap-3">
+      <i class="ti ti-loader-2 text-accent animate-spin"></i>
+      <p class="text-sm text-slate-200">Reading document with AI...</p>
+    </div>
+
+    <div id="extracted" class="hidden mt-6 bg-panel border border-line rounded-xl p-5">
+      <h2 class="font-display font-bold text-white mb-1">Extracted details</h2>
+      <p class="text-xs text-muted mb-4">Check these over and edit anything that's off.</p>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div>
+          <label class="text-sm text-muted block mb-1">Subject</label>
+          <input type="text" value="Business Studies" class="w-full bg-ink border border-line rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-accent/50" />
+        </div>
+        <div>
+          <label class="text-sm text-muted block mb-1">Assessment name</label>
+          <input type="text" value="Marketing Plan — Urban Café" class="w-full bg-ink border border-line rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-accent/50" />
+        </div>
+        <div>
+          <label class="text-sm text-muted block mb-1">Due date</label>
+          <input type="date" value="2026-07-03" class="w-full bg-ink border border-line rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-accent/50" />
+        </div>
+        <div>
+          <label class="text-sm text-muted block mb-1">Weighting</label>
+          <input type="text" value="30%" class="w-full bg-ink border border-line rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-accent/50" />
+        </div>
+        <div class="sm:col-span-2">
+          <label class="text-sm text-muted block mb-1">Key requirements</label>
+          <textarea class="w-full bg-ink border border-line rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-accent/50 h-24">PowerPoint presentation covering the 4Ps of marketing for a hypothetical café, including target market analysis and a real-company case study comparison.</textarea>
+        </div>
+      </div>
+      <button onclick="goTo('planner')" class="mt-5 bg-accent text-ink font-medium px-5 py-2.5 rounded-lg text-sm hover:bg-accent/90 transition flex items-center gap-2">
+        <i class="ti ti-route text-sm"></i> Generate study plan
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PLANNER ============ -->
+<div id="page-planner" class="page">
+  <div class="max-w-6xl mx-auto px-6 py-10">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="font-display text-2xl font-bold text-white">Study planner</h1>
+        <p class="text-muted text-sm">Week of 9–15 June</p>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="setPlannerView('week')" id="btn-week" class="text-sm px-4 py-2 rounded-lg border border-accent/50 text-accent">Week</button>
+        <button onclick="setPlannerView('day')" id="btn-day" class="text-sm px-4 py-2 rounded-lg border border-line text-muted hover:border-accent/40">Day</button>
+      </div>
+    </div>
+
+    <!-- Week view -->
+    <div id="planner-week" class="grid grid-cols-7 gap-3">
+      <!-- Mon -->
+      <div class="bg-panel border border-line rounded-xl p-3 min-h-[220px]">
+        <p class="text-xs text-muted mb-3 font-mono">MON 9</p>
+        <div class="bg-accent/10 border border-accent/30 rounded-lg p-2 mb-2"><p class="text-xs text-slate-200">Gather Economics sources</p></div>
+        <div class="bg-accent2/10 border border-accent2/30 rounded-lg p-2"><p class="text-xs text-slate-200">English: read source 1</p></div>
+      </div>
+      <!-- Tue -->
+      <div class="bg-panel border border-line rounded-xl p-3 min-h-[220px]">
+        <p class="text-xs text-muted mb-3 font-mono">TUE 10</p>
+        <div class="bg-accent/10 border border-accent/30 rounded-lg p-2 mb-2"><p class="text-xs text-slate-200">Economics: TEEL outline</p></div>
+        <div class="bg-amber-300/10 border border-amber-300/30 rounded-lg p-2"><p class="text-xs text-slate-200">Maths: practice set 1</p></div>
+      </div>
+      <!-- Wed -->
+      <div class="bg-panel border border-line rounded-xl p-3 min-h-[220px]">
+        <p class="text-xs text-muted mb-3 font-mono">WED 11</p>
+        <div class="bg-accent/10 border border-accent/30 rounded-lg p-2 mb-2"><p class="text-xs text-slate-200">Economics: draft body 1</p></div>
+        <div class="bg-accent2/10 border border-accent2/30 rounded-lg p-2"><p class="text-xs text-slate-200">English: read source 2</p></div>
+      </div>
+      <!-- Thu -->
+      <div class="bg-panel border-2 border-accent rounded-xl p-3 min-h-[220px]">
+        <p class="text-xs text-accent mb-3 font-mono">THU 12 · TODAY</p>
+        <div class="bg-accent/10 border border-accent/30 rounded-lg p-2 mb-2"><p class="text-xs text-slate-200">Economics: draft body 2</p></div>
+        <div class="bg-accent2/10 border border-accent2/30 rounded-lg p-2 mb-2"><p class="text-xs text-slate-200">English: read source 1</p></div>
+        <div class="bg-line border border-line rounded-lg p-2"><p class="text-xs text-muted">AAFC parade prep</p></div>
+      </div>
+      <!-- Fri -->
+      <div class="bg-panel border border-line rounded-xl p-3 min-h-[220px]">
+        <p class="text-xs text-muted mb-3 font-mono">FRI 13</p>
+        <div class="bg-accent/10 border border-accent/30 rounded-lg p-2 mb-2"><p class="text-xs text-slate-200">Economics: final review</p></div>
+        <div class="bg-line border border-line rounded-lg p-2"><p class="text-xs text-muted">AAFC parade</p></div>
+      </div>
+      <!-- Sat -->
+      <div class="bg-panel border border-line rounded-xl p-3 min-h-[220px]">
+        <p class="text-xs text-muted mb-3 font-mono">SAT 14</p>
+        <div class="bg-amber-300/10 border border-amber-300/30 rounded-lg p-2"><p class="text-xs text-slate-200">Maths: practice set 2</p></div>
+      </div>
+      <!-- Sun -->
+      <div class="bg-panel border border-line rounded-xl p-3 min-h-[220px]">
+        <p class="text-xs text-muted mb-3 font-mono">SUN 15</p>
+        <div class="bg-accent/10 border border-accent/30 rounded-lg p-2 mb-2"><p class="text-xs text-white font-medium">Economics exam</p></div>
+      </div>
+    </div>
+
+    <!-- Day view -->
+    <div id="planner-day" class="hidden bg-panel border border-line rounded-xl p-5 max-w-2xl">
+      <p class="text-xs text-accent font-mono mb-4">THURSDAY 12 JUNE</p>
+      <div class="space-y-3">
+        <div class="flex items-center gap-3 p-3 rounded-lg border border-line">
+          <input type="checkbox" checked class="w-4 h-4 accent-accent" />
+          <p class="text-sm text-slate-200 line-through flex-1">Physics: active recall, wave mechanics</p>
+          <button class="text-xs text-muted hover:text-white"><i class="ti ti-dots"></i></button>
+        </div>
+        <div class="flex items-center gap-3 p-3 rounded-lg border border-line">
+          <input type="checkbox" class="w-4 h-4 accent-accent" />
+          <p class="text-sm text-slate-200 flex-1">Economics: draft TEEL body paragraph 2</p>
+          <button onclick="rescheduleDemo(this)" class="text-xs text-muted hover:text-white flex items-center gap-1"><i class="ti ti-arrow-right"></i> Reschedule</button>
+        </div>
+        <div class="flex items-center gap-3 p-3 rounded-lg border border-line">
+          <input type="checkbox" class="w-4 h-4 accent-accent" />
+          <p class="text-sm text-slate-200 flex-1">English: read source 1 of 3</p>
+          <button onclick="rescheduleDemo(this)" class="text-xs text-muted hover:text-white flex items-center gap-1"><i class="ti ti-arrow-right"></i> Reschedule</button>
+        </div>
+        <div class="flex items-center gap-3 p-3 rounded-lg border border-line">
+          <input type="checkbox" class="w-4 h-4 accent-accent" />
+          <p class="text-sm text-slate-200 flex-1">AAFC parade prep — uniform &amp; admin</p>
+          <button onclick="rescheduleDemo(this)" class="text-xs text-muted hover:text-white flex items-center gap-1"><i class="ti ti-arrow-right"></i> Reschedule</button>
+        </div>
+      </div>
+      <button class="mt-4 text-sm text-accent hover:underline flex items-center gap-1"><i class="ti ti-plus text-sm"></i> Add task</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FOCUS ============ -->
+<div id="page-focus" class="page">
+  <div class="max-w-4xl mx-auto px-6 py-10">
+    <h1 class="font-display text-2xl font-bold text-white mb-1">Focus mode</h1>
+    <p class="text-muted text-sm mb-8">Pomodoro timer, current task, and streak — distractions off.</p>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <!-- Timer -->
+      <div class="md:col-span-2 bg-panel border border-line rounded-xl p-8 flex flex-col items-center">
+        <div class="relative w-56 h-56">
+          <svg class="w-56 h-56" viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="90" stroke="#1F2533" stroke-width="10" fill="none"/>
+            <circle id="ringProgress" class="progress-ring__circle" cx="100" cy="100" r="90" stroke="#7AF6C7" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="565.5" stroke-dashoffset="0"/>
+          </svg>
+          <div class="absolute inset-0 flex flex-col items-center justify-center">
+            <p id="timerDisplay" class="font-display text-5xl font-bold text-white">25:00</p>
+            <p class="text-xs text-muted mt-1">Focus session</p>
+          </div>
+        </div>
+        <div class="flex gap-3 mt-6">
+          <button onclick="toggleTimer()" id="timerBtn" class="bg-accent text-ink font-medium px-6 py-2.5 rounded-lg hover:bg-accent/90 transition flex items-center gap-2"><i class="ti ti-player-play text-sm"></i> Start</button>
+          <button onclick="resetTimer()" class="border border-line px-6 py-2.5 rounded-lg text-sm hover:border-accent/40 transition">Reset</button>
+        </div>
+        <div class="mt-6 w-full border-t border-line pt-4">
+          <p class="text-xs text-muted mb-1">Current task</p>
+          <p class="text-sm text-slate-200">Draft TEEL body paragraph 2 — Economics budget essay</p>
+        </div>
+      </div>
+
+      <!-- Streak / stats -->
+      <div class="space-y-4">
+        <div class="bg-panel border border-line rounded-xl p-5">
+          <p class="text-sm text-muted mb-1">Study streak</p>
+          <p class="font-display text-3xl font-bold text-white flex items-center gap-2">12 <i class="ti ti-flame text-accent2"></i></p>
+          <div class="flex gap-1 mt-3">
+            <span class="w-5 h-5 rounded bg-accent/60"></span><span class="w-5 h-5 rounded bg-accent/60"></span><span class="w-5 h-5 rounded bg-accent/60"></span><span class="w-5 h-5 rounded bg-accent/60"></span><span class="w-5 h-5 rounded bg-accent/60"></span><span class="w-5 h-5 rounded bg-accent/30"></span><span class="w-5 h-5 rounded bg-line"></span>
+          </div>
+        </div>
+        <div class="bg-panel border border-line rounded-xl p-5">
+          <p class="text-sm text-muted mb-1">Sessions today</p>
+          <p class="font-display text-3xl font-bold text-white">2<span class="text-base text-muted font-body"> / 4</span></p>
+        </div>
+        <div class="bg-panel border border-line rounded-xl p-5">
+          <p class="text-sm text-muted mb-3">Up next</p>
+          <p class="text-sm text-slate-200">English: read source 1 of 3</p>
+          <p class="text-xs text-muted mt-1">~20 min · after this session</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function goTo(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function simulateUpload() {
+    document.getElementById('processing').classList.remove('hidden');
+    document.getElementById('extracted').classList.add('hidden');
+    setTimeout(() => {
+      document.getElementById('processing').classList.add('hidden');
+      document.getElementById('extracted').classList.remove('hidden');
+    }, 1200);
+  }
+
+  function setPlannerView(view) {
+    const week = document.getElementById('planner-week');
+    const day = document.getElementById('planner-day');
+    const btnWeek = document.getElementById('btn-week');
+    const btnDay = document.getElementById('btn-day');
+    if (view === 'week') {
+      week.classList.remove('hidden'); day.classList.add('hidden');
+      btnWeek.className = 'text-sm px-4 py-2 rounded-lg border border-accent/50 text-accent';
+      btnDay.className = 'text-sm px-4 py-2 rounded-lg border border-line text-muted hover:border-accent/40';
+    } else {
+      week.classList.add('hidden'); day.classList.remove('hidden');
+      btnDay.className = 'text-sm px-4 py-2 rounded-lg border border-accent/50 text-accent';
+      btnWeek.className = 'text-sm px-4 py-2 rounded-lg border border-line text-muted hover:border-accent/40';
+    }
+  }
+
+  function rescheduleDemo(btn) {
+    const row = btn.closest('div');
+    row.style.opacity = '0.4';
+    setTimeout(() => { row.style.opacity = '1'; }, 400);
+  }
+
+  // Pomodoro timer
+  let timerSeconds = 25 * 60;
+  const totalSeconds = 25 * 60;
+  let timerInterval = null;
+  const circumference = 2 * Math.PI * 90;
+
+  function updateTimerDisplay() {
+    const m = Math.floor(timerSeconds / 60);
+    const s = timerSeconds % 60;
+    document.getElementById('timerDisplay').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+    const ring = document.getElementById('ringProgress');
+    const progress = timerSeconds / totalSeconds;
+    ring.setAttribute('stroke-dasharray', circumference);
+    ring.setAttribute('stroke-dashoffset', circumference * (1 - progress));
+  }
+
+  function toggleTimer() {
+    const btn = document.getElementById('timerBtn');
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      btn.innerHTML = '<i class="ti ti-player-play text-sm"></i> Start';
+    } else {
+      timerInterval = setInterval(() => {
+        if (timerSeconds > 0) {
+          timerSeconds--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          btn.innerHTML = '<i class="ti ti-player-play text-sm"></i> Start';
+        }
+      }, 1000);
+      btn.innerHTML = '<i class="ti ti-player-pause text-sm"></i> Pause';
+    }
+  }
+
+  function resetTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timerSeconds = totalSeconds;
+    updateTimerDisplay();
+    document.getElementById('timerBtn').innerHTML = '<i class="ti ti-player-play text-sm"></i> Start';
+  }
+
+  updateTimerDisplay();
+</script>
+
+</body>
+</html>
