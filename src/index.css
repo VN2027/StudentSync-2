@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0B0E14;
+  --color-panel: #11151F;
+  --color-line: #1F2533;
+  --color-accent: #7AF6C7;
+  --color-accent2: #8B7BFF;
+  --color-muted: #7C879C;
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-ink text-slate-200 font-body antialiased;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+  border-radius: 8px;
+}
